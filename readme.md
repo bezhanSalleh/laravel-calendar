@@ -5,6 +5,7 @@ This is a simple helper package to make generating [http://fullcalendar.io](http
 Thanks to [@maddhatter](https://github.com/maddhatter) for the [initial repo](https://github.com/maddhatter/laravel-fullcalendar) for laravel < 7
 
 ## Installing
+
 Require the package with composer using the following command:
 
     composer require acaronlex/laravel-calendar
@@ -18,8 +19,8 @@ You will also need to include [fullcalendar.io](http://fullcalendar.io/)'s files
 ### Creating Events
 
 #### Using `event()`:
-The simpliest way to create an event is to pass the event information to `Calendar::event()`:
 
+The simpliest way to create an event is to pass the event information to `Calendar::event()`:
 
 ```php
 $event = \Calendar::event(
@@ -33,12 +34,13 @@ $event = \Calendar::event(
 	]
 );
 ```
+
 #### Implementing `Event` Interface
 
-Alternatively, you can use an existing class and have it implement `Acaronlex\LaravelCalendar\Event`. An example of an Eloquent model that implements the `Event` interface:
+Alternatively, you can use an existing class and have it implement `BezhanSalleh\LaravelCalendar\Event`. An example of an Eloquent model that implements the `Event` interface:
 
 ```php
-class EventModel extends Eloquent implements \Acaronlex\LaravelCalendar\Event
+class EventModel extends Eloquent implements \BezhanSalleh\LaravelCalendar\Event
 {
 
     protected $dates = ['start', 'end'];
@@ -96,10 +98,10 @@ class EventModel extends Eloquent implements \Acaronlex\LaravelCalendar\Event
 
 #### `IdentifiableEvent` Interface
 
-If you wish for your existing class to have event IDs, implement `\Acaronlex\LaravelCalendar\IdentifiableEvent` instead. This interface extends `\Acaronlex\LaravelCalendar\Event` to add a `getId()` method:
+If you wish for your existing class to have event IDs, implement `\BezhanSalleh\LaravelCalendar\IdentifiableEvent` instead. This interface extends `\BezhanSalleh\LaravelCalendar\Event` to add a `getId()` method:
 
 ```php
-class EventModel extends Eloquent implements \Acaronlex\LaravelCalendar\IdentifiableEvent
+class EventModel extends Eloquent implements \BezhanSalleh\LaravelCalendar\IdentifiableEvent
 {
 
 	// Implement all Event methods ...
@@ -142,7 +144,7 @@ $event = \Calendar::event(
 
 ```php
 <?php
-class CalendarEvent extends \Illuminate\Database\Eloquent\Model implements \Acaronlex\LaravelCalendar\Event
+class CalendarEvent extends \Illuminate\Database\Eloquent\Model implements \BezhanSalleh\LaravelCalendar\Event
 {
 	//...
 
@@ -165,6 +167,7 @@ class CalendarEvent extends \Illuminate\Database\Eloquent\Model implements \Acar
 ```
 
 ### Create a Calendar
+
 To create a calendar, in your route or controller, create your event(s), then pass them to `Calendar::addEvent()` or `Calendar::addEvents()` (to add an array of events). `addEvent()` and `addEvents()` can be used fluently (chained together). Their second parameter accepts an array of valid [FullCalendar Event Object parameters](http://fullcalendar.io/docs/event_data/Event_Object/).
 
 #### Sample Controller code:
@@ -188,7 +191,7 @@ $events[] = \Calendar::event(
 	'stringEventId' //optionally, you can specify an event ID
 );
 
-$eloquentEvent = EventModel::first(); //EventModel implements Acaronlex\LaravelCalendar\Event
+$eloquentEvent = EventModel::first(); //EventModel implements BezhanSalleh\LaravelCalendar\Event
 
 $calendar = new Calendar();
         $calendar->addEvents($events)
@@ -211,34 +214,35 @@ $calendar = new Calendar();
 return view('hello', compact('calendar'));
 ```
 
-
 #### Sample View
 
 Then to display, add the following code to your View:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.0.0/main.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.0.0/main.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@5.0.0/main.min.js"></script>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.0.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.0.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@5.0.0/main.min.js"></script>
 
-    	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.0.0/main.min.css"/>
-
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.0.0/main.min.css"
+    />
 
     <style>
-        /* ... */
+      /* ... */
     </style>
-</head>
-<body>
-    {!! $calendar->calendar() !!}
-    {!! $calendar->script() !!}
-</body>
+  </head>
+  <body>
+    {!! $calendar->calendar() !!} {!! $calendar->script() !!}
+  </body>
 </html>
 ```
-**Note:** The output from `calendar()` and `script()` must be non-escaped, so use `{!!` and `!!}` (or whatever you've configured your Blade compiler's raw tag directives as).   
+
+**Note:** The output from `calendar()` and `script()` must be non-escaped, so use `{!!` and `!!}` (or whatever you've configured your Blade compiler's raw tag directives as).
 
 The `script()` can be placed anywhere after `calendar()`, and must be after fullcalendar was included.
