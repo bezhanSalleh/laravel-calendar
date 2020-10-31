@@ -1,4 +1,6 @@
-<?php namespace BezhanSalleh\LaravelCalendar;
+<?php 
+
+namespace BezhanSalleh\LaravelCalendar;
 
 interface IdentifiableEvent extends Event
 {
