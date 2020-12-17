@@ -1,6 +1,6 @@
 <?php 
 
-namespace BezhanSalleh\LaravelCalendar\Facades;
+namespace bezhanSalleh\LaravelCalendar\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
